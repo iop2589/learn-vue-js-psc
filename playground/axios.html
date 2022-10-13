@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <button @click="getUsers">Get User</button>
+        <ul>
+            <li v-for="user in users">
+                {{ user.id }} - {{user.name}}
+            </li>
+        </ul>
+        <!-- <div>{{ users }}</div> -->
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    new Vue ({
+        el: "#app",
+        methods: {
+            getUsers: async function () { // Vue Methods 주의 사항 : Vue 는 항상 인스턴스를 처음에 초기화 시킴 / arrow function 함수의 경우 익명 함수이므로 쓰게 되면 전혀 다른 동작을 함 (ex. this 의 경우 Vue를 바라보지 않음.)
+                let response = await axios.get('https://jsonplaceholder.typicode.com/users/');
+                this.users = response.data;
+                console.log(this.users);
+            }
+        },
+        data: {
+            users: []
+        }
+    });
+
+
+</script>
+</html>
